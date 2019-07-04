@@ -46,7 +46,7 @@ body {
 					</td>
 
 					<td><a href="./Delete?id=${Citta.id}">Elimina!</a></td>
-
+					<td><a href="./LoadEditPage?id=${Citta.id}">Modifica</a></td>
 				</tr>
 			</c:forEach>
 		</table>

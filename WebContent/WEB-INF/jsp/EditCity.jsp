@@ -10,11 +10,16 @@
 </head>
 <body>
 
-	<form method="GET" action="Update">
-		<input type="text" name="renamecity" value=""> <input
-			type="submit" value="Modifica"> <input type="hidden"
-			value="${Citta.id}" name="city"> <input type="hidden"
-			value="${param.countrycode}" name="countrycode">
+	<form method="POST" action="Save">
+		<p>
+			<input type="hidden" value="${citta.id}" name="id">
+		</p>
+		<p>
+			<input type="text" name="cityname" value="${citta.name}" >
+		</p>
+		<p>
+			<input type="submit" value="Salva!">
+		</p>
 	</form>
 
 </body>

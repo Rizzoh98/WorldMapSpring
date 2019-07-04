@@ -6,7 +6,7 @@ import it.objectmethod.worldmap.domain.City;
 
 public interface ICityDao {
 	
-	public ArrayList<City> getAllCity(String nation);
+	public City getCityById(Integer id);
 	public void deleteCity(int id);
 	public void updateCity(int id, String city2);
 	public void addCity(String cityadd,String countrycode);

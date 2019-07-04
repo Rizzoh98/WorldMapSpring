@@ -13,64 +13,6 @@ import it.objectmethod.worldmap.domain.City;
 public class CityDao implements ICityDao {
 
 	@Override
-	public ArrayList<City> getAllCity(String nation) {
-		ArrayList<City> citys = new ArrayList<City>();
-
-		Connection connession = null;
-		PreparedStatement stmt = null;
-		ResultSet result = null;
-
-		City city = null;
-
-		try {
-
-			connession = ConnectionDB.getConnection();
-			String sql = "SELECT DISTINCT Name, Population, ID FROM city WHERE CountryCode= ?";
-			stmt = connession.prepareStatement(sql);
-			stmt.setString(1, nation);
-			result = stmt.executeQuery();
-
-			while (result.next()) {
-
-				city = new City();
-				city.setName(result.getString("Name"));
-				city.setPopulation(result.getString("Population"));
-				city.setId(result.getInt("ID"));
-				citys.add(city);
-
-			}
-			result.close();
-			stmt.close();
-			connession.close();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		finally {
-
-			try {
-
-				if (result != null)
-					result.close();
-
-				if (stmt != null)
-					stmt.close();
-
-				if (connession != null)
-					connession.close();
-
-			} catch (Exception xe) {
-				xe.printStackTrace();
-			}
-
-		}
-
-		return citys;
-	}
-
-	@Override
 	public void deleteCity(int id) {
 
 		Connection connession = null;
@@ -156,7 +98,7 @@ public class CityDao implements ICityDao {
 	public void addCity(String cityadd, String countrycode) {
 		Connection connession = null;
 		PreparedStatement stmt = null;
-	
+
 		try {
 			connession = ConnectionDB.getConnection();
 			String sql = "INSERT INTO city (Name,CountryCode) values (?,?)";
@@ -206,11 +148,11 @@ public class CityDao implements ICityDao {
 		try {
 
 			connession = ConnectionDB.getConnection();
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append("SELECT DISTINCT Name, Population, ID FROM city WHERE CountryCode= ? ");
 
-			switch(order) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT Name, Population, ID FROM city WHERE CountryCode= ? ");
+
+			switch (order) {
 			case Constants.ORDER_AZ:
 				sb.append("ORDER BY Name ASC");
 				break;
@@ -224,9 +166,9 @@ public class CityDao implements ICityDao {
 				sb.append("ORDER BY Population DESC");
 				break;
 			default:
-				//DO NOTHING
+				// DO NOTHING
 			}
-			
+
 			String sql = sb.toString();
 
 			stmt = connession.prepareStatement(sql);
@@ -272,5 +214,60 @@ public class CityDao implements ICityDao {
 
 		return citys;
 
+	}
+
+	@Override
+	public City getCityById(Integer id) {
+		City city = null;
+
+		Connection connession = null;
+		PreparedStatement stmt = null;
+		ResultSet result = null;
+
+		try {
+
+			connession = ConnectionDB.getConnection();
+
+			String sql = "SELECT Name, Population, ID FROM city WHERE ID = ?";
+
+			stmt = connession.prepareStatement(sql);
+			stmt.setInt(1, id);
+			result = stmt.executeQuery();
+
+			while (result.next()) {
+				city = new City();
+				city.setName(result.getString("Name"));
+				city.setPopulation(result.getString("Population"));
+				city.setId(result.getInt("ID"));
+			}
+			result.close();
+			stmt.close();
+			connession.close();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+
+				if (result != null)
+					result.close();
+
+				if (stmt != null)
+					stmt.close();
+
+				if (connession != null)
+					connession.close();
+
+			} catch (Exception xe) {
+				xe.printStackTrace();
+			}
+
+		}
+
+		return city;
 	}
 }

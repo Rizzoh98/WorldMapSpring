@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.objectmethod.worldmap.config.Constants;
@@ -19,7 +20,7 @@ import it.objectmethod.worldmap.domain.City;
 public class CitysController {
 
 
-	@GetMapping("/citys")
+	@RequestMapping("/citys")
 	public String getIndex(ModelMap model, @RequestParam(value="countrycode", required = false) String countrycode,
 			@RequestParam(value="order", required = false) String order, HttpSession session) {
 		List<City> citta = new ArrayList<City>();
@@ -78,20 +79,6 @@ public class CitysController {
 		return "Citta";
 	}
 
-	@GetMapping("/Add")
-	public String addCity(@RequestParam("countrycode") String countrycode, @RequestParam("city") String city,
-			HttpSession session) {
-
-		CityDao cityDao = new CityDao();
-
-		// if (countrycode == null)
-		countrycode = (String) session.getAttribute("nation");
-
-		cityDao.addCity(city, countrycode);
-
-		return "forward:/citys";
-	}
-
 	@GetMapping("/Delete")
 	public String deleteCity(@RequestParam("id") Integer id) {
 		CityDao cityDao = new CityDao();
@@ -100,13 +87,32 @@ public class CitysController {
 
 		return "forward:/citys";
 	}
+	
+	
+	@GetMapping("/LoadEditPage")
+	public String loadEditPage(@RequestParam("id") Integer idCity, ModelMap map) {
+		CityDao cityDao = new CityDao();
+		City city = new City();
+		if(!idCity.equals(0)) {
+			city = cityDao.getCityById(idCity);
+		}
+	
+		map.addAttribute("citta", city);
+		return "EditCity";
+	}
 
-	@GetMapping("/Update")
-	public String updateCity(@RequestParam("city") Integer city, @RequestParam("countrycode") String countrycode) {
+
+	@PostMapping("/Save")
+	public String saveCity(@RequestParam("id") Integer idCity, @RequestParam("cityname") String cityName) {
 		CityDao cityDao = new CityDao();
 
-		cityDao.updateCity(city, countrycode);
+		if(!idCity.equals(0)) {
+			cityDao.updateCity(idCity, cityName);
+		} else {
+			cityDao.addCity(cityName, "ITA");
+		}
 
+		//Ricaricati!
 		return "forward:/citys";
 	}
 
