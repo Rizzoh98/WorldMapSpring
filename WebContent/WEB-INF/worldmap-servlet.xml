@@ -13,7 +13,7 @@
 
 	<mvc:annotation-driven />
 	<context:component-scan
-		base-package="it.objectmethod.worldmap.controller" />
+		base-package="it.objectmethod.worldmap" />
 	<mvc:default-servlet-handler />
 
 	<bean id="viewResolver"

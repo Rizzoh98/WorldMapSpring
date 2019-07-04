@@ -19,42 +19,21 @@ body {
 
 
 
-		<h1>LISTA CITTA'</h1><br>
-		
-		<form action="nation">
-			<input type="submit" value="Torna alle Nazioni"> 
-		</form><br><br>
-		
-		<form method = "GET" action="Add">
-			<input type="text" name="addcity" value=""> 
-			<input type="submit" value="Aggiungi"> 
-			<input type="hidden" value="${Citta.name}" name="city"> 
-			
+		<h1>LISTA CITTA'</h1>
+		<br> <a href="./nation">Torna alle Nazioni</a> <br> <br>
 
-		</form><br><br>
+		<form method="GET" action="Add">
+			<input type="text" name="addcity" value=""> <input
+				type="submit" value="Aggiungi"> <input type="hidden"
+				value="${Citta.name}" name="city">
+		</form>
+		<br> <br>
 
 		<table align="center">
-
 			<tr>
-			
-				<td>
-					<form action="citys">
-						<input type="submit" value="A-Z / Z-A">  
-						<input type="hidden" value="${param.countrycode}" name="countrycode">
-						<input type="hidden" value="${order}" name="order">
-					</form>
-				</td>
-
-				<td>
-					<form action="citys">
-						<input type="submit" value="Max/Min"> 
-						<input type="hidden" value="${param.countrycode}" name="countrycode">
-						<input type="hidden" value="${orderP}" name="order">
-					</form>
-				</td>
-			
+				<td><a href="./citys?order=${orderName}">${orderName}</a></td>
+				<td><a href="./citys?order=${orderPop}">${orderPop}</a></td>
 			</tr>
-
 
 			<c:forEach items="${result}" var="Citta">
 				<tr>
@@ -66,22 +45,8 @@ body {
 						<p>${Citta.population}</p>
 					</td>
 
-					<td>
-						<form method = "GET" action="Delete">
-							<input type="submit" value="Elimina">
-							<input type="hidden" value="${Citta.id}" name="city"> 
-							<input type="hidden" value="${param.countrycode}" name="countrycode">
-						</form>
-					</td>
+					<td><a href="./Delete?id=${Citta.id}">Elimina!</a></td>
 
-					<td>
-						<form method = "GET" action="Update">
-							<input type="text" name="renamecity" value=""> 
-							<input type="submit" value="Modifica">
-							<input type="hidden" value="${Citta.id}" name="city"> 
-							<input type="hidden" value="${param.countrycode}" name="countrycode">
-						</form>
-					</td>
 				</tr>
 			</c:forEach>
 		</table>

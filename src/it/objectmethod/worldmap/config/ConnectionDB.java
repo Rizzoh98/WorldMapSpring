@@ -1,4 +1,4 @@
-	package it.objectmethod.worldmap.DBconnection;
+	package it.objectmethod.worldmap.config;
 	
 	import java.io.InputStream;
 	import java.sql.Connection;

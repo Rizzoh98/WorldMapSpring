@@ -5,7 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import it.objectmethod.worldmap.DBconnection.ConnectionDB;
+import it.objectmethod.worldmap.config.ConnectionDB;
+import it.objectmethod.worldmap.config.Constants;
 import it.objectmethod.worldmap.dao.ICityDao;
 import it.objectmethod.worldmap.domain.City;
 
@@ -205,9 +206,28 @@ public class CityDao implements ICityDao {
 		try {
 
 			connession = ConnectionDB.getConnection();
-			String sql = null;
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append("SELECT DISTINCT Name, Population, ID FROM city WHERE CountryCode= ? ");
 
-			sql = "SELECT DISTINCT Name, Population, ID FROM city WHERE CountryCode= ? ORDER BY " + order;
+			switch(order) {
+			case Constants.ORDER_AZ:
+				sb.append("ORDER BY Name ASC");
+				break;
+			case Constants.ORDER_ZA:
+				sb.append("ORDER BY Name DESC");
+				break;
+			case Constants.ORDER_POP_ASC:
+				sb.append("ORDER BY Population ASC");
+				break;
+			case Constants.ORDER_POP_DESC:
+				sb.append("ORDER BY Population DESC");
+				break;
+			default:
+				//DO NOTHING
+			}
+			
+			String sql = sb.toString();
 
 			stmt = connession.prepareStatement(sql);
 			stmt.setString(1, nation);
