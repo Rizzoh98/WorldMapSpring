@@ -95,6 +95,8 @@ public class CitysController {
 		City city = new City();
 		if(!idCity.equals(0)) {
 			city = cityDao.getCityById(idCity);
+		} else {
+			city.setId(0);
 		}
 	
 		map.addAttribute("citta", city);
