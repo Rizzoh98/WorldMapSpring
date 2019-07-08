@@ -14,10 +14,15 @@ body {
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-	<div align="center"><h1>LISTA NAZIONI</h1>
+	<div align="center">
+		<h1>LISTA NAZIONI</h1>
 
-	<c:forEach var="Nazione" items="${result}">
-		<a href="citys?countrycode=${Nazione.countrycode}">${Nazione.name}</a><br>
-	</c:forEach></div>
+		<br> <a href="./">Torna ai Continenti</a> <br> <br>
+
+		<c:forEach var="Nazione" items="${result}">
+			<a href="citys?countrycode=${Nazione.countrycode}">${Nazione.name}</a>
+			<br>
+		</c:forEach>
+	</div>
 </body>
 </html>

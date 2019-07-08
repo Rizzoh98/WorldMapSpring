@@ -10,14 +10,24 @@
 </head>
 <body>
 
-	<form method="POST" action="Save">
+	<form action="Save">
 		<p>
 			<input type="hidden" value="${citta.id}" name="id">
+		</p>
+		<p>
+			<input type="hidden" value="${countrycode}" name="countrycode">
 		</p>
 		<p>
 			<input type="text" name="cityname" value="${citta.name}" >
 		</p>
 		<p>
+			<select name = "selectCountry">
+					<c:forEach var="Nazione" items="${result}">
+						<option value = "${Nazione.countrycode}">${Nazione.name}</option>
+					</c:forEach>
+					
+			</select>
+			
 			<input type="submit" value="Salva!">
 		</p>
 	</form>

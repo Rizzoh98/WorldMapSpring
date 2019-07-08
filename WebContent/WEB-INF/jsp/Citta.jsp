@@ -21,12 +21,9 @@ body {
 
 		<h1>LISTA CITTA'</h1>
 		<br> <a href="./nation">Torna alle Nazioni</a> <br> <br>
-
-		<form method="GET" action="Add">
-			<input type="text" name="addcity" value=""> <input
-				type="submit" value="Aggiungi"> <input type="hidden"
-				value="${Citta.name}" name="city">
-		</form>
+		
+		<a href="./LoadEditPage?id=0">Nuova Città</a>
+		
 		<br> <br>
 
 		<table align="center">
