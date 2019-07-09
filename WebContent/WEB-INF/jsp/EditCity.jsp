@@ -15,26 +15,22 @@
 			<input type="hidden" value="${citta.id}" name="id">
 		</p>
 		<p>
-			<input type="hidden" value="${countrycode}" name="countrycode">
-		</p>
-		<p>
 			<input type="text" name="cityname" value="${citta.name}">
 		</p>
 		<p>
 			<select name="selectCountry">
-				<c:forEach var="Nazione" items="${result}">
+				<c:forEach var="nazione" items="${result}">
 					<c:choose>
 
-						<c:when test="">
-							<option value="${Nazione.countrycode}">${Nazione.name}</option>
+						<c:when test="${citta.countrycode == nazione.countrycode}">
+							<option value="${nazione.countrycode}" selected>${nazione.name}</option>
 						</c:when>
 
 						<c:otherwise>
-							<option value="${countrycode}">${Nazione.name}</option>
+							<option value="${nazione.countrycode}">${nazione.name}</option>
 						</c:otherwise>
 
 					</c:choose>
-					<option value="${Nazione.countrycode}">${Nazione.name}</option>
 				</c:forEach>
 
 			</select> <input type="submit" value="Salva!">

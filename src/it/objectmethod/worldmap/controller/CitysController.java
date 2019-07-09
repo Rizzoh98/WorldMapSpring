@@ -16,6 +16,7 @@ import it.objectmethod.worldmap.config.Constants;
 import it.objectmethod.worldmap.dao.imp.*;
 import it.objectmethod.worldmap.dao.*;
 import it.objectmethod.worldmap.domain.City;
+import it.objectmethod.worldmap.domain.Nation;
 
 @Controller
 public class CitysController {
@@ -90,22 +91,28 @@ public class CitysController {
 
 	@GetMapping("/LoadEditPage")
 	public String loadEditPage(@RequestParam("id") Integer idCity, ModelMap map,HttpSession session) {
+		
+		NationDao nationDao = new NationDao();
 		CityDao cityDao = new CityDao();
+		
 		City city = new City();
+		List<Nation> allnation = null;
 		
-		String countrycode=(String)session.getAttribute("nation");
-		
-		if (idCity != null) {
+		if (idCity != 0) {
 			city = cityDao.getCityById(idCity);
 		} else {
 			city.setId(0);
-			city = cityDao.getCityById(idCity);
+		}
+		
+		try {
+			allnation = nationDao.getAllNations();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		//map.addAttribute("result", nazioni)
-		map.addAttribute("countrycode", countrycode);
+		map.addAttribute("result", allnation);
 		map.addAttribute("citta", city);
-		return "forward:/allnations";
+		return "EditCity";
 	}
 
 	@GetMapping("/Save")

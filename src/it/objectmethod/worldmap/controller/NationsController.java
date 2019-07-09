@@ -56,22 +56,5 @@ public class NationsController {
 
 		return "Nazioni";
 	}
-	
-	@RequestMapping("/allnations")
-	public String getIndex(ModelMap model, HttpSession session) {
-		List<Nation> allnation = null;
-
-		NationDao nationDao = new NationDao();
-
-		try {
-			allnation = nationDao.getAllNations();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		model.addAttribute("result", allnation);
-
-		return "EditCity";
-	}
 
 }
