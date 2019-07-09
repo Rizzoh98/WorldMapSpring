@@ -9,5 +9,5 @@ public interface INationDao {
 	
 	public List<String> getAllContinent();
 	public List<Nation> getAllNation(String continent);
-	
+	public List<Nation> getAllNations();
 }

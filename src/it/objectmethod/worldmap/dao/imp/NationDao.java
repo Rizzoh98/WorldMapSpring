@@ -69,6 +69,62 @@ public class NationDao implements INationDao {
 
 		return nations;
 	}
+	
+	@Override
+	public List<Nation> getAllNations() {
+		List<Nation> allnations = new ArrayList<Nation>();
+
+		Nation nation = null;
+
+		Connection connession = null;
+		PreparedStatement stmt = null;
+		ResultSet result = null;
+
+		try {
+
+			connession = ConnectionDB.getConnection();
+			String sql = "SELECT DISTINCT Name,Code FROM country";
+			stmt = connession.prepareStatement(sql);;
+			result = stmt.executeQuery();
+
+			while (result.next()) {
+
+				nation = new Nation();
+				nation.setName(result.getString("Name"));
+				nation.setCountrycode(result.getString("Code"));
+				allnations.add(nation);
+
+			}
+			result.close();
+			stmt.close();
+			connession.close();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
+		finally {
+
+			try {
+
+				if (result != null)
+					result.close();
+
+				if (stmt != null)
+					stmt.close();
+
+				if (connession != null)
+					connession.close();
+
+			} catch (Exception xe) {
+				xe.printStackTrace();
+			}
+
+		}
+
+		return allnations;
+	}
 
 	@Override
 	public List<String> getAllContinent() {

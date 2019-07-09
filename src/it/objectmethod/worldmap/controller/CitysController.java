@@ -102,9 +102,10 @@ public class CitysController {
 			city = cityDao.getCityById(idCity);
 		}
 
+		//map.addAttribute("result", nazioni)
 		map.addAttribute("countrycode", countrycode);
 		map.addAttribute("citta", city);
-		return "EditCity";
+		return "forward:/allnations";
 	}
 
 	@GetMapping("/Save")
