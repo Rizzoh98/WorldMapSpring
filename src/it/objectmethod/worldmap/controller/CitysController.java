@@ -90,7 +90,7 @@ public class CitysController {
 	}
 
 	@GetMapping("/LoadEditPage")
-	public String loadEditPage(@RequestParam("id") Integer idCity, ModelMap map,HttpSession session) {
+	public String loadEditPage(@RequestParam("id") Integer idCity,@RequestParam(value = "countrycode", required = false) String countrycode, ModelMap map,HttpSession session) {
 		
 		NationDao nationDao = new NationDao();
 		CityDao cityDao = new CityDao();
@@ -112,21 +112,17 @@ public class CitysController {
 
 		map.addAttribute("result", allnation);
 		map.addAttribute("citta", city);
+		map.addAttribute("countrycode", countrycode);
 		return "EditCity";
 	}
 
 	@GetMapping("/Save")
 	public String saveCity(@RequestParam("id") Integer idCity, @RequestParam("cityname") String cityName,
-			@RequestParam("countrycode") String countrycode) {
+			@RequestParam("selectCountry") String countrycode) {
 
 		CityDao cityDao = new CityDao();
-		
-		//if(countrycode == null) {
-			//countrycode=(String)session.getAttribute("nation");
-			//
-		//}	
 
-		if (idCity != null) {
+		if (idCity != 0) {
 			cityDao.updateCity(idCity, cityName);
 
 		} else {

@@ -22,7 +22,7 @@ body {
 		<h1>LISTA CITTA'</h1>
 		<br> <a href="./nation">Torna alle Nazioni</a> <br> <br>
 		
-		<a href="./LoadEditPage?id=0">Nuova Città</a>
+		<a href="./LoadEditPage?id=0&countrycode=${param.countrycode}">Nuova Città</a>
 		
 		<br> <br>
 
@@ -43,7 +43,7 @@ body {
 					</td>
 
 					<td><a href="./Delete?id=${Citta.id}">Elimina!</a></td>
-					<td><a href="./LoadEditPage?id=${Citta.id}">Modifica</a></td>
+					<td><a href="./LoadEditPage?id=${Citta.id}&countrycode=${param.countrycode}">Modifica</a></td>
 				</tr>
 			</c:forEach>
 		</table>

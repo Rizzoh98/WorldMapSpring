@@ -22,7 +22,7 @@
 				<c:forEach var="nazione" items="${result}">
 					<c:choose>
 
-						<c:when test="${citta.countrycode == nazione.countrycode}">
+						<c:when test="${nazione.countrycode == param.countrycode}">
 							<option value="${nazione.countrycode}" selected>${nazione.name}</option>
 						</c:when>
 
