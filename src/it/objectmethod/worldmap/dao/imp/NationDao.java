@@ -1,178 +1,56 @@
 package it.objectmethod.worldmap.dao.imp;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
-import it.objectmethod.worldmap.config.ConnectionDB;
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import it.objectmethod.worldmap.dao.INationDao;
 import it.objectmethod.worldmap.domain.Nation;
+import it.objectmethod.worldmap.domain.mapper.NationMapper;
 
 public class NationDao implements INationDao {
+	
+	private DataSource dataSource;
+	private JdbcTemplate jdbcTemplateObject;
+	
 
-	@Override
-	public List<Nation> getAllNation(String continent) {
-		List<Nation> nations = new ArrayList<Nation>();
-
-		Nation nation = null;
-
-		Connection connession = null;
-		PreparedStatement stmt = null;
-		ResultSet result = null;
-
-		try {
-
-			connession = ConnectionDB.getConnection();
-			String sql = "SELECT DISTINCT Name,Code FROM country WHERE Continent = ?";
-			stmt = connession.prepareStatement(sql);
-			stmt.setString(1, continent);
-			result = stmt.executeQuery();
-
-			while (result.next()) {
-
-				nation = new Nation();
-				nation.setName(result.getString("Name"));
-				nation.setCountrycode(result.getString("Code"));
-				nations.add(nation);
-
-			}
-			result.close();
-			stmt.close();
-			connession.close();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		finally {
-
-			try {
-
-				if (result != null)
-					result.close();
-
-				if (stmt != null)
-					stmt.close();
-
-				if (connession != null)
-					connession.close();
-
-			} catch (Exception xe) {
-				xe.printStackTrace();
-			}
-
-		}
-
-		return nations;
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 	
 	@Override
+	public List<Nation> getAllNation(String continent) {
+		
+		List<Nation> getallnation = null;
+		String sql = "SELECT * FROM country WHERE code = ?";
+		getallnation = this.jdbcTemplateObject.query(sql, new Object[]{continent}, new NationMapper());	
+		
+		return getallnation;
+	}	
+	
+	@Override
 	public List<Nation> getAllNations() {
-		List<Nation> allnations = new ArrayList<Nation>();
-
-		Nation nation = null;
-
-		Connection connession = null;
-		PreparedStatement stmt = null;
-		ResultSet result = null;
-
-		try {
-
-			connession = ConnectionDB.getConnection();
-			String sql = "SELECT DISTINCT Name,Code FROM country";
-			stmt = connession.prepareStatement(sql);;
-			result = stmt.executeQuery();
-
-			while (result.next()) {
-
-				nation = new Nation();
-				nation.setName(result.getString("Name"));
-				nation.setCountrycode(result.getString("Code"));
-				allnations.add(nation);
-
-			}
-			result.close();
-			stmt.close();
-			connession.close();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		finally {
-
-			try {
-
-				if (result != null)
-					result.close();
-
-				if (stmt != null)
-					stmt.close();
-
-				if (connession != null)
-					connession.close();
-
-			} catch (Exception xe) {
-				xe.printStackTrace();
-			}
-
-		}
-
-		return allnations;
+		
+		List<Nation> getallnations = null;
+		String sql = "SELECT DISTINCT Name,Code FROM country";
+		getallnations = this.jdbcTemplateObject.query(sql, new NationMapper());	
+		
+		return getallnations;
 	}
 
+	
 	@Override
 	public List<String> getAllContinent() {
-		List<String> continents = new ArrayList<String>();
-
-		Connection connession = null;
-		Statement stmt = null;
-		ResultSet result = null;
-
-		try {
-
-			connession = ConnectionDB.getConnection();
-			String sql = "SELECT DISTINCT Continent FROM country";
-			stmt = connession.createStatement();
-			result = stmt.executeQuery(sql);
-
-			while (result.next()) {
-				continents.add(result.getString("Continent"));
-			}
-			result.close();
-			stmt.close();
-			connession.close();
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
-
-		finally {
-
-			try {
-
-				if (result != null)
-					result.close();
-
-				if (stmt != null)
-					stmt.close();
-
-				if (connession != null)
-					connession.close();
-
-			} catch (Exception xe) {
-				xe.printStackTrace();
-			}
-
-		}
-
+		
+		List<String> continents = null;
+		String sql = "SELECT DISTINCT Continent FROM country";
+		continents = this.jdbcTemplateObject.queryForList(sql,String.class);	
+		
 		return continents;
+		
 	}
 
 }

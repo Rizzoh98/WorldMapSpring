@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,12 +17,14 @@ import it.objectmethod.worldmap.domain.Nation;
 @Controller
 public class NationsController {
 	
+	@Autowired
+	NationDao nationDao;
+	
 	@RequestMapping("/")
 	public String getIndex(ModelMap model) {
 
 		List<String> continenti = new ArrayList<String>();
-		NationDao nationDao = new NationDao();
-
+		
 		try {
 			continenti = nationDao.getAllContinent();
 		} catch (Exception e) {
@@ -43,8 +46,6 @@ public class NationsController {
 		} else {
 			session.setAttribute("continent", continent);
 		}
-
-		NationDao nationDao = new NationDao();
 
 		try {
 			nazioni = nationDao.getAllNation(continent);
