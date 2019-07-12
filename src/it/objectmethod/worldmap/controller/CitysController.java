@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,12 +21,17 @@ import it.objectmethod.worldmap.domain.Nation;
 
 @Controller
 public class CitysController {
-
+	
+	@Autowired
+	CityDao cityDao;
+	
+	@Autowired
+	NationDao nationDao;
+	
 	@RequestMapping("/citys")
 	public String getIndex(ModelMap model, @RequestParam(value = "countrycode", required = false) String countrycode,
 			@RequestParam(value = "order", required = false) String order, HttpSession session) {
 		List<City> citta = new ArrayList<City>();
-		CityDao cityDao = new CityDao();
 
 		if (countrycode == null) {
 			countrycode = (String) session.getAttribute("nation");
@@ -82,7 +88,6 @@ public class CitysController {
 
 	@GetMapping("/Delete")
 	public String deleteCity(@RequestParam("id") Integer id) {
-		CityDao cityDao = new CityDao();
 
 		cityDao.deleteCity(id);
 
@@ -91,9 +96,6 @@ public class CitysController {
 
 	@GetMapping("/LoadEditPage")
 	public String loadEditPage(@RequestParam("id") Integer idCity,@RequestParam(value = "countrycode", required = false) String countrycode, ModelMap map,HttpSession session) {
-		
-		NationDao nationDao = new NationDao();
-		CityDao cityDao = new CityDao();
 		
 		City city = new City();
 		List<Nation> allnation = null;
@@ -119,8 +121,6 @@ public class CitysController {
 	@GetMapping("/Save")
 	public String saveCity(@RequestParam("id") Integer idCity, @RequestParam("cityname") String cityName,
 			@RequestParam("selectCountry") String countrycode) {
-
-		CityDao cityDao = new CityDao();
 
 		if (idCity != 0) {
 			cityDao.updateCity(idCity, cityName);

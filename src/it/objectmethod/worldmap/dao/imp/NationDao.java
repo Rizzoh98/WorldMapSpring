@@ -15,6 +15,7 @@ public class NationDao implements INationDao {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplateObject;
 	
+	
 
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -25,7 +26,7 @@ public class NationDao implements INationDao {
 	public List<Nation> getAllNation(String continent) {
 		
 		List<Nation> getallnation = null;
-		String sql = "SELECT * FROM country WHERE code = ?";
+		String sql = "SELECT * FROM country WHERE Continent = ?";
 		getallnation = this.jdbcTemplateObject.query(sql, new Object[]{continent}, new NationMapper());	
 		
 		return getallnation;
