@@ -1,6 +1,7 @@
 package it.objectmethod.worldmap.dao;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 import it.objectmethod.worldmap.domain.City;
 
@@ -10,7 +11,7 @@ public interface ICityDao {
 	public void deleteCity(int id);
 	public void updateCity(int id, String city2);
 	public void addCity(String cityadd,String countrycode);
-	public ArrayList<City> orderCity(String nation,String order);
+	public List<City> orderCity(String nation,String order);
 
 	
 	

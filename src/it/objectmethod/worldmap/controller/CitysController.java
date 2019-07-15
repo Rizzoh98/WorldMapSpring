@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.objectmethod.worldmap.config.Constants;
-import it.objectmethod.worldmap.dao.imp.*;
-import it.objectmethod.worldmap.dao.*;
+import it.objectmethod.worldmap.dao.imp.CityDao;
+import it.objectmethod.worldmap.dao.imp.NationDao;
 import it.objectmethod.worldmap.domain.City;
 import it.objectmethod.worldmap.domain.Nation;
 
